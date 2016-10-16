@@ -25,7 +25,7 @@ class Movie < ActiveRecord::Base
               end
               
               ; x}
-              sleep(2)
+              sleep(6)
       sleep(4)
       return ratings_arr
     rescue Tmdb::InvalidApiKeyError
