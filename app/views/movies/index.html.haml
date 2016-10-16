@@ -24,9 +24,8 @@
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
-        
-= form_tag :action => 'search_tmdb' do
 
+= form_tag movies_search_tmdb_path, :method => :get do
   = label :search_terms, 'Search for movie titles containing:'
   = text_field :search, :terms, :id => "search_box"
 

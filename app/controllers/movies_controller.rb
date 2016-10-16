@@ -62,7 +62,9 @@ class MoviesController < ApplicationController
   end
   
   def search_tmdb
+    puts("search term undefined here")
     @search_term = params[:search][:terms]
+    puts("search term is "+@search_term)
     
     if @search_term == "" or @search_term == nil
       flash[:notice] = "Invalid search term"
