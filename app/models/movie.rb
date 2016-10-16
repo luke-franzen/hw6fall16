@@ -10,20 +10,7 @@ class Movie < ActiveRecord::Base
       Tmdb::Api.key("f4702b08c0ac6ea5b51425788bb26562")
       
       movie_arr = Tmdb::Movie.find(string)
-      if !movie_arr.empty?
-        puts("movie_arr has values")
-      else
-        puts("movie_arr is empty")
-      end
-      #sleep(3)
-      ##call api request, then do shit with the result --> use callback or closure
       hash_arr = movie_arr.each.map{|x| {:tmdb_id => x.id, :title => x.title, :release_date => x.release_date} }
-      
-      if !hash_arr.empty?
-        puts(hash_arr.each {|x| x[:title]})
-      else
-        puts("hash_arr is empty")
-      end
       
       ratings_arr = hash_arr.each.map {|x| x[:rating] = 
               if (Tmdb::Movie.releases(x[:tmdb_id])["countries"].select {|y| y["iso_3166_1"] == "US"}) == []
@@ -38,7 +25,8 @@ class Movie < ActiveRecord::Base
               end
               
               ; x}
-      
+              sleep(2)
+      sleep(4)
       return ratings_arr
     rescue Tmdb::InvalidApiKeyError
         raise Movie::InvalidKeyError, 'Invalid API key'
