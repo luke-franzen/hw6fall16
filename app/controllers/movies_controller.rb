@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
 
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :search_terms)
   end
 
   def show
@@ -62,20 +62,19 @@ class MoviesController < ApplicationController
   end
   
   def search_tmdb
-    puts("search term undefined here")
-    @search_term = params[:search][:terms]
-    puts("search term is "+@search_term)
+    @search_term = params[:search_terms]
     
     if @search_term == "" or @search_term == nil
       flash[:notice] = "Invalid search term"
       redirect_to movies_path
-    
     else
       @movies = Movie.find_in_tmdb(@search_term)
-      if @movies.empty?
-        flash[:notice] = "No matching movies were found on TMDb"
-        redirect_to movies_path
-      end
+        if @movies.empty?
+          flash[:notice] = "No matching movies were found on TMDb"
+          redirect_to movies_path
+        else
+          return @movies
+        end
     end
   end
   
