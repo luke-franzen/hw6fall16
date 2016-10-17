@@ -16,11 +16,12 @@ class Movie < ActiveRecord::Base
               if (Tmdb::Movie.releases(x[:tmdb_id])["countries"].select {|y| y["iso_3166_1"] == "US"}) == []
                   "NR"
               else
-                  rating = Tmdb::Movie.releases(x[:tmdb_id])["countries"].select {|y| y["iso_3166_1"] == "US"} [0]["certification"]
-                  if (rating == "")
+                  rating_arr = Tmdb::Movie.releases(x[:tmdb_id])["countries"].select {|y| y["iso_3166_1"] == "US"}
+                  rating = rating_arr.select {|z| z["iso_3166_1"] == "US" and z["certification"] != ""}
+                  if (rating == [])
                     "NR"
                   else
-                    rating
+                    rating[0]["certification"]
                   end
               end
               
